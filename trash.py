@@ -60,6 +60,27 @@ length = datetime.strptime('Jun 2005', '%b %Y')-datetime.strptime('Jun 2004', '%
 length1 = datetime.strptime('Jun 2004', '%b %Y')-datetime.strptime('Jun 2005', '%b %Y')
 length1.days
 
+# print(self.name)
+# print(self.company)
+# print(str(self.beginning()))
+# print(str(self.ending()))
+
+from webdriver_manager.firefox import GeckoDriverManager
+
+len(text_group[0].find_all("li"))
+list_job = list()
+list_li = text_group[0].find_all("li")
+new_job = Job()
+new_job.change_company_name(str.strip(text_group[0].find_next("h4").text))
+new_job.change_job_name(str.strip(list_li[0].find_next("h3").text))
+new_job.change_job_name(str.strip(list_li[1].find_next("h3").text))
+
+
+len(text_single[0].find_next("h4").contents)
+re.search(">(.*?)<", str(text_single[0].find_next("h4").contents[2])).group(1)
+re.search("<time>(.*?)</time>", str(text_single[0].find_all("p", {"class": "education__item education__item--duration"}, limit=2)[0])).group(1)
+re.findall("<time>(.*?)</time>", str(text_single[0].find_all("p", {"class": "education__item education__item--duration"}, limit=2)[0]))
+
 
 
 
