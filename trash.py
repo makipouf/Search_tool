@@ -81,6 +81,44 @@ re.search(">(.*?)<", str(text_single[0].find_next("h4").contents[2])).group(1)
 re.search("<time>(.*?)</time>", str(text_single[0].find_all("p", {"class": "education__item education__item--duration"}, limit=2)[0])).group(1)
 re.findall("<time>(.*?)</time>", str(text_single[0].find_all("p", {"class": "education__item education__item--duration"}, limit=2)[0]))
 
+# https://www.geeksforgeeks.org/performing-google-search-using-python-code/
+
+try:
+    from googlesearch import search
+except ImportError:
+    print("No module named 'google' found")
+
+# to search
+query = "site:linkedin.com " + "Gaetan Gellens"
+
+for j in search(query, tld="co.in", num=10, stop=1, pause=2, country="Belgium"):
+    print(j)
+    a = j
+
+# import web driver
+
+soup.find_all("a")
+mydivs = soup.find_all("div", {"class": "core-section-container__content"}, limit=1)
+ul = mydivs[0].find_next("ul") # unordinated
+text = ul.find_all("li") # li  for list item
+print(len(text))
+for li in text: # list item
+    print(li.find_next("h3").text)
+    print(li.find_next("h4").text)
+    print(li.find_next("time").text) # find newt gives the first one from where the object is pointing
+    print(li.find_next("time").find_next("time").text)
+
+This is for the second part
+mydivs = soup.find_all("div", {"class": "core-section-container__content"}, limit=2)
+ul = mydivs[1].find_next("ul") # unordinated
+text = ul.find_all("li") # li  for list item
+print(len(text))
+for li in text: # list item
+    print(li.find_next("h3").text)
+    print(li.find_next("h4").text)
+    print(li.find_next("time").text) # find newt gives the first one from where the object is pointing
+    print(li.find_next("time").find_next("time").text)
+# mydivs[0].find_next("h3").find_next("h3")
 
 
 
