@@ -1,5 +1,6 @@
 import re
 from class_actuary import *
+from google_search import MyChromeDriver
 
 def Load_job_single(job_data):
     new_job = Job()
@@ -162,65 +163,71 @@ def Load_actuary(soup,url):
         del update_single
 
     # Try to initialize approximated age
-    new_actuary.add_birthday_appr()
+    new_actuary.get_birthday_appr()
 
     return new_actuary
 
-# if __name__ == '__main__':
-#     student = Load_actuary(soup,driver.current_url)
-#     student.name
-#     student.title
-#     student.connection
-#     student.location
-#     student.link
-#     student.add_
-#     student.add_birthday_appr()
-#     student.birthday_appr
-#     now=datetime.now()
-#     student.birthday_appr()
-#     print(student)
-#     str(relativedelta(now, student.birthday_appr).years) + ' years'
-#     for i in range(len(student.career)):
-#         print("\n")
-#         print(student.career[i])
-#
-#     for i in range(len(student.education)):
-#         print("\n")
-#         print(student.education[i])
-#
-#
-#
-#     for i in range(len(student.education)):
-#         print("\n")
-#         print(student.education[i].type_degree)
-#         print(student.education[i].beginning())
-#
-#     test = Load_job_single(text_single_job[0])
-#     print(test)
-#
-#     test = Load_job_multi(text_group[0])
-#     print(test[1])
-#
-#     test = Load_education_single(text_single_study[0])
-#     print(Load_education_single(text_single_study[0]))
-#
-#
-#     student = Actuary()
-#     student.add_name('Gaétan')
-#     student.add_job(test)
-#     student.career[0].name
-#     print(student.career[0])
-#
-#     # Name
-#     str.strip(identity_raw[0].find_next("h1").text)
-#     # Title
-#     str.strip(identity_raw[0].find_next("h2").text)
-#     # Connection
-#     identity_raw[0].find_next("h3").find_next("span").find_next("span").text
-#     # Location
-#     identity_raw[0].find_next("h3").find_next("span").text
-#     # Link
-#     driver.current_url
+if __name__ == '__main__':
+    my_chrome_driver = MyChromeDriver()
+    my_chrome_driver.linkedin_sign_in()
+    my_chrome_driver.go_to_linkedin()
+    my_chrome_driver.go_to_linkedin(name='Gaétan Gellens')
+    driver = my_chrome_driver.driver
+    soup = my_chrome_driver.get_soup()
+    student = Load_actuary(soup, driver.current_url)
+    student.name
+    student.title
+    student.connection
+    student.location
+    student.link
+    student.add_
+    student.add_birthday_appr()
+    student.birthday_appr
+    now=datetime.now()
+    student.birthday_appr()
+    print(student)
+    str(relativedelta(now, student.birthday_appr).years) + ' years'
+    for i in range(len(student.career)):
+        print("\n")
+        print(student.career[i])
+
+    for i in range(len(student.education)):
+        print("\n")
+        print(student.education[i])
+
+
+
+    for i in range(len(student.education)):
+        print("\n")
+        print(student.education[i].type_degree)
+        print(student.education[i].beginning())
+
+    test = Load_job_single(text_single_job[0])
+    print(test)
+
+    test = Load_job_multi(text_group[0])
+    print(test[1])
+
+    test = Load_education_single(text_single_study[0])
+    print(Load_education_single(text_single_study[0]))
+
+
+    student = Actuary()
+    student.add_name('Gaétan')
+    student.add_job(test)
+    student.career[0].name
+    print(student.career[0])
+
+    # Name
+    str.strip(identity_raw[0].find_next("h1").text)
+    # Title
+    str.strip(identity_raw[0].find_next("h2").text)
+    # Connection
+    identity_raw[0].find_next("h3").find_next("span").find_next("span").text
+    # Location
+    identity_raw[0].find_next("h3").find_next("span").text
+    # Link
+    driver.current_url
 
 
 

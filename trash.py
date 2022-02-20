@@ -120,6 +120,36 @@ for li in text: # list item
     print(li.find_next("time").find_next("time").text)
 # mydivs[0].find_next("h3").find_next("h3")
 
+    def beginning(self):
+
+        time_beginning_ini = self.time_beginning
+        return time_beginning_ini.strftime("%B %Y")
+
+    def ending(self):
+
+        time_ending_ini = self.time_ending
+        return time_ending_ini.strftime("%B %Y")
+
+    def length(self):
+
+        try:
+            assert ((self.time_ending - self.time_beginning).days >= 0)
+            length = self.time_ending - self.time_beginning
+            # return divmod(length.total_seconds(), 31536000)[0]
+            return round(length.total_seconds() / 31536000, 1)
+
+        except AssertionError:
+            print("The length is negative -> Not possible")
+
+    def __repr__(self):
+
+        # return {'Job name':self.name, 'Company':self.company}
+        return ''
+
+        # send_keys() to simulate the search text key strokes
+        # search_query.send_keys('site:linkedin.com "Gaétan Gellens"')
+        # search_query.send_keys('site:linkedin.com "Rubin Daija"')
+        # search_query.send_keys('site:linkedin.com "Meghna Lakshminarayanan"')
 
 
 

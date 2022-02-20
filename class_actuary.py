@@ -184,7 +184,7 @@ class Study:
 
 class Actuary:
 
-    def __init__(self, date=datetime.now()):
+    def __init__(self, date=datetime.datetime.now()):
 
         self.now = date
 
@@ -304,34 +304,8 @@ class Actuary:
         # now = datetime.now()
         now_curr = self.now
         time_difference = relativedelta(now_curr, birthday)
-        # return str(time_difference.years) + " years"
+        return str(time_difference.years) + " years"
 
-
-    # def beginning(self):
-    #
-    #     time_beginning_ini = self.time_beginning
-    #     return time_beginning_ini.strftime("%B %Y")
-    #
-    # def ending(self):
-    #
-    #     time_ending_ini = self.time_ending
-    #     return time_ending_ini.strftime("%B %Y")
-    #
-    # def length(self):
-    #
-    #     try:
-    #         assert ((self.time_ending - self.time_beginning).days >= 0)
-    #         length = self.time_ending - self.time_beginning
-    #         # return divmod(length.total_seconds(), 31536000)[0]
-    #         return round(length.total_seconds() / 31536000, 1)
-    #
-    #     except AssertionError:
-    #         print("The length is negative -> Not possible")
-
-    # def __repr__(self):
-    #
-    #     # return {'Job name':self.name, 'Company':self.company}
-    #     return ''
 
     def __str__(self):
         # print("Job name: ",self.name,"\nCompany name: ",self.company,"\nBeinning date: ",self.beginning(),"\nEnding date: ",self.ending(),"\nJob length (/year): ",self.length())
