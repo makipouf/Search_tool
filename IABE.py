@@ -23,20 +23,12 @@ for i in range(22):
     new_link = str(prefix_member) + str('?pager=') + str(i+2)
     links_member.append(new_link)
 
-# driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
 
-driver.get(links_member[0])
-
-soup = BeautifulSoup(driver.page_source, 'html.parser')
-
-mydivs = soup.find_all("div", {"class": "publicRelationList__relation"})
-mydivs[0].find_next("h3").text.replace(",","")
 
 list_member = []
-from selenium.webdriver.support.ui import WebDriverWait
 for i in range(len(links_member)):
     driver.get(links_member[i])
-    time.sleep(3)
+    time.sleep(2)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     mydivs = soup.find_all("div", {"class": "publicRelationList__relation"})
 

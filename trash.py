@@ -151,5 +151,21 @@ for li in text: # list item
         # search_query.send_keys('site:linkedin.com "Rubin Daija"')
         # search_query.send_keys('site:linkedin.com "Meghna Lakshminarayanan"')
 
+# https://www.linkedin.com/pulse/how-hack-linkedins-search-limits-brooke-grubb-miles
+# Interesting
 
 
+driver.get(links_member[0])
+
+soup = BeautifulSoup(driver.page_source, 'html.parser')
+
+mydivs = soup.find_all("div", {"class": "publicRelationList__relation"})
+mydivs[0].find_next("h3").text.replace(",","")
+
+
+# driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+
+# Get_English = self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div/div/a[2]')
+# Get_English.click()
+# time.sleep(3)
+# locate search form by_name

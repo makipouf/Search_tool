@@ -1,6 +1,8 @@
 import re
 from class_actuary import *
 from google_search import MyChromeDriver
+import time
+
 
 def Load_job_single(job_data):
     new_job = Job()
@@ -21,8 +23,8 @@ def Load_job_single(job_data):
 
     return new_job
 
-def Load_job_multi(job_data):
 
+def Load_job_multi(job_data):
     list_job = list()
     list_li = job_data.find_all("li")
 
@@ -49,28 +51,36 @@ def Load_job_multi(job_data):
 
     return list_job
 
-def Load_education_single(education_data):
 
+def Load_education_single(education_data):
     new_education = Study()
     # new_education.change_company_name(str.strip(job_data.find_next("h4").text))
     new_education.add_school_name(str.strip(education_data.find_next("h3").text))
 
     try:
 
-        if len(education_data.find_next("h4").contents)==5:
+        if len(education_data.find_next("h4").contents) == 5:
+            try:
+                new_education.add_type_degree(
+                    re.search(">(.*?)<", str(education_data.find_next("h4").contents[1])).group(1))
+            except AttributeError:
+                pass
 
-            new_education.add_type_degree(re.search(">(.*?)<", str(education_data.find_next("h4").contents[1])).group(1))
-
-
-            if (str(education_data.find_next("h4").contents[2]) not in (' ', '  ')):
-                new_education.add_name_study(re.search(">(.*?)<", str(education_data.find_next("h4").contents[2])).group(1))
+            try:
+                if (str(education_data.find_next("h4").contents[2]) not in (' ', '  ')):
+                    new_education.add_name_study(
+                        re.search(">(.*?)<", str(education_data.find_next("h4").contents[2])).group(1))
+            except AttributeError:
+                pass
 
             # except AssertionError:
             #     print("Could not find the right second name for education")
 
-        elif len(education_data.find_next("h4").contents)==4:
 
-            new_education.add_type_degree(re.search(">(.*?)<", str(education_data.find_next("h4").contents[1])).group(1))
+        elif len(education_data.find_next("h4").contents) == 4:
+
+            new_education.add_type_degree(
+                re.search(">(.*?)<", str(education_data.find_next("h4").contents[1])).group(1))
 
 
     except ValueError:
@@ -78,7 +88,8 @@ def Load_education_single(education_data):
 
     try:
 
-        time_education = re.findall("<time>(.*?)</time>", str(education_data.find_all("p", {"class": "education__item education__item--duration"}, limit=2)[0]))
+        time_education = re.findall("<time>(.*?)</time>", str(
+            education_data.find_all("p", {"class": "education__item education__item--duration"}, limit=2)[0]))
 
         if len(time_education) == 1:
 
@@ -88,7 +99,7 @@ def Load_education_single(education_data):
 
             new_education.change_time_beginning(time_education[0])
 
-            if (time_education[1]!=time_education[0]):
+            if (time_education[1] != time_education[0]):
                 new_education.change_time_ending(time_education[1])
 
     except ValueError:
@@ -96,8 +107,8 @@ def Load_education_single(education_data):
 
     return new_education
 
-def Load_actuary(soup,url):
 
+def Load_actuary(soup, url):
     ### Data partitioning ###
 
     # Initialization class Actuary
@@ -111,7 +122,8 @@ def Load_actuary(soup,url):
 
     my_career_uls = soup.find_all("ul", {"class": "experience__list"}, limit=2)
 
-    data_job =  my_career_uls[0].find_all("li", {"class": ("profile-section-card experience-item","experience-group experience-item")})
+    data_job = my_career_uls[0].find_all("li", {
+        "class": ("profile-section-card experience-item", "experience-group experience-item")})
     data_single_job = my_career_uls[0].find_all("li", {"class": "profile-section-card experience-item"})
     data_group_job = my_career_uls[0].find_all("li", {"class": "experience-group experience-item"})
 
@@ -143,19 +155,19 @@ def Load_actuary(soup,url):
 
     for i in range(len(data_job)):
         iter_class = data_job[i].get("class")[0]
-        if(iter_class=='experience-group'):
+        if (iter_class == 'experience-group'):
             update_multi = Load_job_multi(data_group_job[iter_group])
             for j in range(len(update_multi)):
                 new_actuary.add_job(update_multi[j])
                 iter_group += 1
             del update_multi
-        elif(iter_class=='profile-section-card'):
+        elif (iter_class == 'profile-section-card'):
             update_single = Load_job_single(data_single_job[iter_single])
             new_actuary.add_job(update_single)
             iter_single += 1
             del update_single
 
-    # Add job experience
+    # Add education
 
     for k in range(len(data_study)):
         update_single = Load_education_single(data_study[k])
@@ -167,14 +179,40 @@ def Load_actuary(soup,url):
 
     return new_actuary
 
+
 if __name__ == '__main__':
     my_chrome_driver = MyChromeDriver()
     my_chrome_driver.linkedin_sign_in()
     my_chrome_driver.go_to_linkedin()
+    my_chrome_driver.driver.current_url
     my_chrome_driver.go_to_linkedin(name='Gaétan Gellens')
+    my_chrome_driver.driver.current_url.find('linkedin')
     driver = my_chrome_driver.driver
     soup = my_chrome_driver.get_soup()
     student = Load_actuary(soup, driver.current_url)
+
+    # Script test automated LinkedIn
+
+    my_chrome_driver = MyChromeDriver()
+    list_linkedin_member = []
+    list_linkedin_non_member = []
+
+    i = 0
+    while i != len(list_member):  # len(list_member)
+        print('Iteration ' + str(i))
+        my_chrome_driver.go_to_linkedin(name=list_member[i])
+        my_chrome_driver.go_to_linkedin_conditional(name=list_member[i])
+        time.sleep(2)
+        if my_chrome_driver.driver.current_url.find(
+                list_member[i].split()[0].lower()) != -1 and my_chrome_driver.driver.current_url.find(
+                list_member[i].split()[1].lower()) != -1:
+            list_linkedin_member.append(i)
+        else:
+            list_linkedin_non_member.append(i)
+        i += 1
+
+
+
     student.name
     student.title
     student.connection
@@ -183,7 +221,7 @@ if __name__ == '__main__':
     student.add_
     student.add_birthday_appr()
     student.birthday_appr
-    now=datetime.now()
+    now = datetime.now()
     student.birthday_appr()
     print(student)
     str(relativedelta(now, student.birthday_appr).years) + ' years'
@@ -194,8 +232,6 @@ if __name__ == '__main__':
     for i in range(len(student.education)):
         print("\n")
         print(student.education[i])
-
-
 
     for i in range(len(student.education)):
         print("\n")
@@ -210,7 +246,6 @@ if __name__ == '__main__':
 
     test = Load_education_single(text_single_study[0])
     print(Load_education_single(text_single_study[0]))
-
 
     student = Actuary()
     student.add_name('Gaétan')
@@ -228,13 +263,3 @@ if __name__ == '__main__':
     identity_raw[0].find_next("h3").find_next("span").text
     # Link
     driver.current_url
-
-
-
-
-
-
-
-
-
-

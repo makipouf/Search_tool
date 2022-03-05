@@ -184,7 +184,7 @@ class Study:
 
 class Actuary:
 
-    def __init__(self, date=datetime.datetime.now()):
+    def __init__(self, date=datetime.now()):
 
         self.now = date
 
