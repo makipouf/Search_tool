@@ -119,7 +119,6 @@ def Load_actuary(soup, url):
     identity_data = soup.find_all("div", {"class": "top-card-layout__entity-info"})
 
     # Set up career data
-
     my_career_uls = soup.find_all("ul", {"class": "experience__list"}, limit=2)
 
     data_job = my_career_uls[0].find_all("li", {
@@ -183,13 +182,14 @@ def Load_actuary(soup, url):
 if __name__ == '__main__':
     my_chrome_driver = MyChromeDriver()
     my_chrome_driver.linkedin_sign_in()
+    my_chrome_driver.linkedin_sign_out()
     my_chrome_driver.go_to_linkedin()
     my_chrome_driver.driver.current_url
     my_chrome_driver.go_to_linkedin(name='Gaétan Gellens')
     my_chrome_driver.driver.current_url.find('linkedin')
     driver = my_chrome_driver.driver
     soup = my_chrome_driver.get_soup()
-    student = Load_actuary(soup, driver.current_url)
+    student = Load_actuary(soup, my_chrome_driver.driver.current_url)
 
     # Script test automated LinkedIn
 
@@ -212,15 +212,15 @@ if __name__ == '__main__':
         i += 1
 
 
-
+    student = Load_actuary_connected(soup, my_chrome_driver.driver.current_url)
     student.name
     student.title
     student.connection
     student.location
     student.link
-    student.add_
     student.add_birthday_appr()
     student.birthday_appr
+    student.get_birthday_appr()
     now = datetime.now()
     student.birthday_appr()
     print(student)
@@ -263,3 +263,8 @@ if __name__ == '__main__':
     identity_raw[0].find_next("h3").find_next("span").text
     # Link
     driver.current_url
+
+
+
+
+

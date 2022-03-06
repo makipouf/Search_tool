@@ -155,7 +155,8 @@ class Study:
     def change_time_beginning(self, date):
 
         try:
-            datetime_beginning = datetime.strptime(date, '%Y')
+
+            #datetime_beginning = datetime.strptime(date, '%b %Y')
             datetime_ending = datetime.strptime(date, '%Y')
             datetime_beginning = datetime_beginning.replace(day=1, month=9)
             datetime_ending = datetime_ending.replace(day=31, month=12)
@@ -168,7 +169,7 @@ class Study:
     def change_time_ending(self, date):
 
         try:
-            datetime_ending = datetime.strptime(date, '%Y')
+            #datetime_ending = datetime.strptime(date, '%b %Y')
             datetime_ending = datetime_ending.replace(day=31, month=8)
             self.time_ending = datetime_ending
 
@@ -178,7 +179,7 @@ class Study:
     def __str__(self):
         # print("Job name: ",self.name,"\nCompany name: ",self.company,"\nBeinning date: ",self.beginning(),"\nEnding date: ",self.ending(),"\nJob length (/year): ",self.length())
         return "School: " + str(self.school) + "\n" + str(self.type_degree) + " " + str(
-            self.name_study) + "\nBeinning date: " + str(self.beginning()) + "\nEnding date: " + str(
+            self.name_study) + "\nBeginning date: " + str(self.beginning()) + "\nEnding date: " + str(
             self.ending()) + "\nJob length (/year): " + str(self.length())
 
 

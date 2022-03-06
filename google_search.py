@@ -45,7 +45,8 @@ class MyChromeDriver:
         Get_menu = self.driver.find_element(By.ID, 'ember25')
         Get_menu.click()
         time.sleep(2)
-        Get_sign_out = self.driver.find_element(By.XPATH, '//*[@id="ember27"]/div/ul/li[3]/a')
+        # Get_sign_out = self.driver.find_element(By.XPATH, '//*[@id="ember27"]/div/ul/li[3]/a')
+        Get_sign_out = self.driver.find_element(By.XPATH, '//*[@id="ember28"]/div/ul/li[3]/a')
         Get_sign_out.click()
         time.sleep(3)
 
@@ -72,8 +73,19 @@ class MyChromeDriver:
         Get_first_request = WebDriverWait(self.driver, 200).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'yuRUbf'))
         )
-        get_url = self.driver.find_element(By.XPATH, '//*[@id="rso"]/div[1]/div/div[1]/div/a')
-        self.sought_url = get_url.get_attribute('href')
+        try:
+            get_url = self.driver.find_element(By.XPATH, '//*[@id="rso"]/div[1]/div/div[1]/div/a')
+            self.sought_url = get_url.get_attribute('href')
+        except NoSuchElementException:
+            pass
+        try:
+            get_url = self.driver.find_element(By.XPATH, '//*[@id="rso"]/div[1]/div/div/div[1]/div/a')
+            self.sought_url = get_url.get_attribute('href')
+        except NoSuchElementException:
+            pass
+        # get_url = self.driver.find_element(By.XPATH, '//*[@id="rso"]/div[1]/div/div[1]/div/a')
+        # get_url = self.driver.find_element(By.XPATH, '//*[@id="rso"]/div[1]/div/div/div[1]/div/a')
+        # self.sought_url = get_url.get_attribute('href')
         Get_first_request.click()
 
     def go_to_linkedin_conditional(self, name="ARABI Mouhannad"):
